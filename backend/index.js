@@ -33,9 +33,23 @@ loadTaskFromFile()
 
 app.get('/tasks', (req, res) => {
     try {
+        const page = parseInt(req.query.page) || 1
+        const limit = parseInt(req.query.limit) || 10
+
+        const startIndex = (page - 1) * limit
+        const endIndex = startIndex + limit
+        
+        const paginatedTasks = tasks.slice(startIndex, endIndex)
+
         return res.status(200).json({
             message: "Tasks successfully retrieved",
-            data: tasks
+            data: paginatedTasks,
+            pageInfo: {
+                limit: limit,
+                prevPage:  `http://localhost:3200/api/tasks?limit=${limit}&page=${page-1}`,
+                currentPage: `http://localhost:3200/api/tasks?limit=${limit}&page=${page}`,
+                nextPage: `http://localhost:3200/api/tasks?limit=${limit}&page=${page+1}`
+            }
         })
     }
     catch(err) {
