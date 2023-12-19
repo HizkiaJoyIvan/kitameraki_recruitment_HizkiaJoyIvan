@@ -21,7 +21,7 @@ const TaskList = () => {
   const fetchMoreData = async () => {
     try {
       setLoading(true)
-      const res = await fetch(`http://localhost:3200/tasks?page=${page}`, {
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URI}/tasks?page=${page}`, {
         method: 'GET',
       })
       const data = await res.json()
@@ -49,7 +49,7 @@ const TaskList = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch('http://localhost:3200/tasks', {
+        const res = await fetch(`${process.env.REACT_APP_BACKEND_URI}/tasks`, {
           method: 'GET',
         })
         const data = await res.json()

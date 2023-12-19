@@ -10,7 +10,7 @@ const TaskEdit = ({id, handleExit}) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-              const res = await fetch(`http://localhost:3200/tasks/${id}`, {
+              const res = await fetch(`${process.env.REACT_APP_BACKEND_URI}/tasks/${id}`, {
                 method: 'GET',
               })
               const data = await res.json()
@@ -25,7 +25,7 @@ const TaskEdit = ({id, handleExit}) => {
   
     const editTask = async () => {
       try {
-          const res = await fetch(`http://localhost:3200/tasks/${id}`, {
+          const res = await fetch(`${process.env.REACT_APP_BACKEND_URI}/tasks/${id}`, {
               method: 'PUT',
               headers: {
                   'Content-Type': 'application/json'

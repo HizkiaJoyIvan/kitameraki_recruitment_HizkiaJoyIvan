@@ -4,7 +4,7 @@ const TaskDelete = ({id, handleExit}) => {
 
     const deleteTask = async () => {
         try {
-            const res = await fetch(`http://localhost:3200/tasks/${id}`, {
+            const res = await fetch(`${process.env.REACT_APP_BACKEND_URI}/tasks/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
