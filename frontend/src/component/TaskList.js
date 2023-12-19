@@ -5,12 +5,16 @@ import { Spinner } from '@fluentui/react'
 import { FaPlusSquare } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import TaskEdit from './TaskEdit'
+import TaskForm from './TaskForm'
+import TaskDelete from './TaskDelete'
 
 const TaskList = () => {
   const [tasks, setTasks] = useState([])
   const [loading, setLoading] = useState(false)
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(2)
   const [openForm, setOpenForm] = useState(false)
+  const [openAdd, setOpenAdd] = useState(false)
+  const [openDelete, setOpenDelete] = useState(false)
   const [selectedTaskId, setSelectedTaskId] = useState(null) 
 
   const fetchMoreData = async () => {
@@ -54,15 +58,22 @@ const TaskList = () => {
       }
     }
     fetchData()
-  }, [openForm])
+  }, [openForm, openAdd, openDelete])
 
   const handleEdit = (taskId) => {
     setSelectedTaskId(taskId) 
     setOpenForm(true)
   }
 
+  const handleDelete = (taskId) => {
+    setSelectedTaskId(taskId) 
+    setOpenDelete(true)
+  }
+
   const handleExit = () => {
     setOpenForm(false)
+    setOpenAdd(false)
+    setOpenDelete(false)
   }
 
   return (
@@ -71,7 +82,9 @@ const TaskList = () => {
         <h2 className='text-white font-semibold text-lg'>Welcome to</h2>
         <h1 className='text-orange-400 font-bold text-3xl'>taskpedia</h1>
       </div>
-      {openForm && <TaskEdit id={selectedTaskId} handleExit={handleExit}/>} {/* Pass the selected task ID to TaskEdit */}
+      {openForm && <TaskEdit id={selectedTaskId} handleExit={handleExit}/>} 
+      {openAdd && <TaskForm handleExit={handleExit}/>} 
+      {openDelete && <TaskDelete id={selectedTaskId} handleExit={handleExit}/>} 
       <div
         className={`w-[80%] flex flex-col gap-5 p-5 overflow-y-auto ${openForm ? 'z-0' : 'z-10'}`}
         onScroll={handleScroll}
@@ -93,6 +106,7 @@ const TaskList = () => {
               />
               <FaTrash
                 className='text-xl text-red-500 cursor-pointer hover:text-2xl hover:text-red-700'
+                onClick={() => handleDelete(t.id)}
               />
             </div>
           </div>
@@ -100,9 +114,7 @@ const TaskList = () => {
         {loading && <Spinner label='Loading...' appearance='inverted' styles={{ label: { color: 'blue' } }} />}
       </div>
       <div className='fixed bottom-5 right-5 bg-blue-600 p-2 cursor-pointer rounded-md hover:scale-110 hover:bg-blue-500 z-10'>
-        <Link to={'/form'}>
-          <FaPlusSquare className='text-white text-3xl' />
-        </Link>
+          <FaPlusSquare className='text-white text-3xl' onClick={() => setOpenAdd(true)}/>
       </div>
     </div>
   )
