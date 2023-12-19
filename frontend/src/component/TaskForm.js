@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import { TextField, DefaultButton } from '@fluentui/react'
 import { IoIosExit } from "react-icons/io"
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const TaskForm = () => {
 
   const [title, setTitle] = useState('')
   const [desc, setDesc] = useState('')
+  const navigate = useNavigate()
 
   const addTask = async () => {
     try {
@@ -20,10 +21,8 @@ const TaskForm = () => {
                 desc
             })
         })
-        if(res.OK) {
-            setTitle('')
-            setDesc('')
-            console.log('Added')
+        if(res) {
+            navigate.to("/")
         }
     } 
     catch(err) {
@@ -34,7 +33,7 @@ const TaskForm = () => {
   return (
     <div className='h-screen flex flex-col justify-center items-center bg-blue-200 gap-5 relative'>
         <Link to={"/"}>
-            <IoIosExit className='text-black text-4xl right-5 top-5 fixed cursor-pointer'/>
+            <IoIosExit className='text-black text-4xl right-5 top-5 fixed cursor-pointer hover:scale-110 hover:text-red-500'/>
         </Link>
         <TextField 
             className='w-[50%]'

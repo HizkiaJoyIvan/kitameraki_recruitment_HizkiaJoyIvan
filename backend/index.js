@@ -31,6 +31,23 @@ async function saveTaskToFile() {
 
 loadTaskFromFile()
 
+app.get('/tasks/:id', (req, res) => {
+    try {
+        const taskID = parseInt(req.params.id)
+        const searchedTask = tasks.find((task) => task.id === taskID)
+
+        return res.status(200).json({
+            message: "Task successfully retrieved",
+            data: searchedTask
+        })
+    }
+    catch(err) {
+        return res.status(500).json({
+            message: err
+        })
+    }
+})
+
 app.get('/tasks', (req, res) => {
     try {
         const page = parseInt(req.query.page) || 1
@@ -74,6 +91,33 @@ app.post('/tasks', (req, res) => {
         saveTaskToFile()
         return res.status(200).json({
             message: "Task successfully added"
+        })
+    }
+    catch(err) {
+        return res.status(500).json({
+            message: err
+        })
+    }
+})
+
+app.put('/tasks/:id', (req, res) => {
+    try {
+        const taskID = parseInt(req.params.id)
+        const targetTask = tasks.find((task) => task.id === taskID)
+
+        if(!targetTask) {
+            return res.status(404).json({
+                message: "Task not found"
+            })
+        }
+
+        const {title, desc} = req.body
+        targetTask.title = title || targetTask.title
+        targetTask.desc = desc || targetTask.desc
+
+        return res.status(200).json({
+            message: "Task successfully updated",
+            data: targetTask
         })
     }
     catch(err) {
