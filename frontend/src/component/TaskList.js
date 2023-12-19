@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { FaTrash } from 'react-icons/fa6'
 import { MdModeEditOutline } from 'react-icons/md'
 import { Spinner } from '@fluentui/react'
+import { FaPlusSquare } from "react-icons/fa"
+import { Link } from 'react-router-dom'
 
 const TaskList = () => {
   const [tasks, setTasks] = useState([])
@@ -53,7 +55,7 @@ const TaskList = () => {
   }, [])
 
   return (
-    <div className='h-screen w-[100%] bg-slate-500 flex'>
+    <div className='h-screen w-[100%] bg-slate-500 flex relative'>
       <div className='w-[20%] bg-white p-2'>
         <h1 className='text-blue-800 font-bold text-2xl'>Task Management App</h1>
       </div>
@@ -78,6 +80,11 @@ const TaskList = () => {
           </div>
         ))}
         {loading && <Spinner label="Loading..." appearance="inverted" styles={{ label: { color: 'white' } }}/>}
+      </div>
+      <div className="fixed bottom-5 right-5 bg-blue-600 p-2 cursor-pointer rounded-md hover:scale-110 hover:bg-blue-500">
+        <Link to={"/form"}>
+            <FaPlusSquare className='text-white text-3xl'/>
+        </Link>
       </div>
     </div>
   )
