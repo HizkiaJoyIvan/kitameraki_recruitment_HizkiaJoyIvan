@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 import TaskEdit from './TaskEdit'
 import TaskForm from './TaskForm'
 import TaskDelete from './TaskDelete'
+import { IoSettings } from "react-icons/io5"
 
 const TaskList = () => {
   const [tasks, setTasks] = useState([])
@@ -81,6 +82,12 @@ const TaskList = () => {
       <div className='w-[20%] bg-blue-500 p-2 flex flex-col'>
         <h2 className='text-white font-semibold text-lg'>Welcome to</h2>
         <h1 className='text-orange-400 font-bold text-3xl'>taskpedia</h1>
+        <Link to='/settings'>
+          <div className="flex gap-2 bg-white px-3 py-2 rounded-md items-center bottom-5 left-3 fixed cursor-pointer hover:scale-105 hover:bg-slate-50">
+            <IoSettings className='text-blue-500'/>
+            <p className='text-blue-500 font-semibold text-lg'>Settings</p>
+          </div>
+        </Link>
       </div>
       {openForm && <TaskEdit id={selectedTaskId} handleExit={handleExit}/>} 
       {openAdd && <TaskForm handleExit={handleExit}/>} 

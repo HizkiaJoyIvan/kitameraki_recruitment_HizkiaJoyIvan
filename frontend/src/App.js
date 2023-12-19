@@ -7,6 +7,7 @@ import {
   Route
 } from 'react-router-dom';
 import TaskList from './component/TaskList';
+import FormBuilder from './component/FormBuilder';
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
       <Routes>
         <Route path='/' element={<TaskList />}/>
         <Route path='/form' element={<TaskForm />}/>
+        <Route path='/settings' element={<FormBuilder />}/>
       </Routes>
     </Router>
   );

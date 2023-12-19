@@ -7,7 +7,6 @@ const TaskForm = ({handleExit}) => {
 
   const [title, setTitle] = useState('')
   const [desc, setDesc] = useState('')
-  const navigate = useNavigate()
 
   const addTask = async () => {
     try {
